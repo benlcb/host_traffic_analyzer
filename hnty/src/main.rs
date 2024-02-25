@@ -35,9 +35,9 @@ async fn main() -> Result<(), anyhow::Error> {
         // This can happen if you remove all log statements from your eBPF program.
         warn!("failed to initialize eBPF logger: {}", e);
     }
-    let program: &mut TracePoint = bpf.program_mut("hnty").unwrap().try_into()?;
+    let program: &mut TracePoint = bpf.program_mut("inet_sock_set_state").unwrap().try_into()?;
     program.load()?;
-    program.attach("net", "inet_sock_set_state")?;
+    program.attach("sock", "inet_sock_set_state")?;
 
     info!("Waiting for Ctrl-C...");
     signal::ctrl_c().await?;
