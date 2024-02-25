@@ -1,8 +1,8 @@
 use aya::programs::TracePoint;
 use aya::{include_bytes_aligned, Bpf};
 use aya_log::BpfLogger;
-use log::{info, warn, debug};
 use eyre::Result;
+use log::{debug, warn};
 
 pub struct TrafficCapture {
     bpf: Bpf,
@@ -10,8 +10,6 @@ pub struct TrafficCapture {
 
 impl TrafficCapture {
     pub fn new() -> Result<Self> {
-        env_logger::init();
-
         // Bump the memlock rlimit. This is needed for older kernels that don't use the
         // new memcg based accounting, see https://lwn.net/Articles/837122/
         let rlim = libc::rlimit {
@@ -38,7 +36,11 @@ impl TrafficCapture {
             // This can happen if you remove all log statements from your eBPF program.
             warn!("failed to initialize eBPF logger: {}", e);
         }
-        let program: &mut TracePoint = traffic_capture.bpf.program_mut("inet_sock_set_state").unwrap().try_into()?;
+        let program: &mut TracePoint = traffic_capture
+            .bpf
+            .program_mut("inet_sock_set_state")
+            .unwrap()
+            .try_into()?;
         program.load()?;
         program.attach("sock", "inet_sock_set_state")?;
 

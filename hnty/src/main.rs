@@ -1,15 +1,14 @@
-use aya::programs::TracePoint;
-use aya::{include_bytes_aligned, Bpf};
-use aya_log::BpfLogger;
-use log::{info, warn, debug};
+use eyre::Result;
+use log::info;
 use tokio::signal;
 
 use hnty_lib::TrafficCapture;
 
 #[tokio::main]
-async fn main() -> Result<(), anyhow::Error> {
-
-    let traffic_capture = TrafficCapture::new();
+async fn main() -> Result<()> {
+    env_logger::init();
+    // When this is dropped, traffic is no longer captured
+    let _traffic_capture = TrafficCapture::new()?;
 
     info!("Waiting for Ctrl-C...");
     signal::ctrl_c().await?;

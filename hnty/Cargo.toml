@@ -14,6 +14,7 @@ libc = "0.2"
 log = "0.4"
 tokio = { version = "1.25", features = ["macros", "rt", "rt-multi-thread", "net", "signal"] }
 hnty-lib = { path = "../hnty-lib", version = "*" }
+eyre = "*"
 
 [[bin]]
 name = "hnty"
