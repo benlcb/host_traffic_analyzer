@@ -1,2 +1,2 @@
 [workspace]
-members = ["xtask", "hnty", "hnty-common"]
+members = ["xtask", "hnty", "hnty-common", "hnty-lib"]

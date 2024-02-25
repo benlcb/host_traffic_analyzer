@@ -1,5 +1,5 @@
 [package]
-name = "hnty"
+name = "hnty-lib"
 version = "0.1.0"
 edition = "2021"
 publish = false
@@ -13,8 +13,7 @@ env_logger = "0.10"
 libc = "0.2"
 log = "0.4"
 tokio = { version = "1.25", features = ["macros", "rt", "rt-multi-thread", "net", "signal"] }
-hnty-lib = { path = "../hnty-lib", version = "*" }
+eyre = "*"
 
-[[bin]]
-name = "hnty"
-path = "src/main.rs"
+[lib]
+path = "src/lib.rs"
